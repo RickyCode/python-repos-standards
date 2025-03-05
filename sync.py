@@ -1,5 +1,6 @@
 import os
 import shutil
+from utils import run_cmd
 
 source_path = '.standards/'
 # destination_file = '.pre-commit-config.yaml'
@@ -12,13 +13,23 @@ files = [
     # 'LICENSE',
 ]
 
-for file_name in files:
 
-    source_file = source_path + file_name
-    destination_file = file_name
+def update_submodule():
+    run_cmd('git submodule update --remote')
 
-    if not os.path.exists(source_file):
-        raise FileNotFoundError(f'The source file {source_file} does not exist.')
 
-    shutil.copy2(source_file, destination_file)
-    print(f'Copied {source_file} to {destination_file}')
+def sync_files():
+    for file_name in files:
+
+        source_file = source_path + file_name
+        destination_file = file_name
+
+        if not os.path.exists(source_file):
+            raise FileNotFoundError(f'The source file {source_file} does not exist.')
+
+        shutil.copy2(source_file, destination_file)
+        print(f'Copied {source_file} to {destination_file}')
+
+
+if __name__ == '__main__':
+    sync_files()

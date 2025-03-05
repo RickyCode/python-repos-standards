@@ -1,12 +1,7 @@
-import subprocess
+from utils import run_cmd
 
 
-def run_cmd(cmd):
-    result = subprocess.run(cmd, shell=True)
-    return result.returncode
-
-
-if __name__ == '__main__':
+def run_precommit():
     print('Sequence started!')
     run_cmd('pre-commit install')
     run_cmd('git update-index --again')
@@ -26,7 +21,11 @@ if __name__ == '__main__':
         i += 1
 
     # run_cmd('python ./__scripts__/project_context_generator.py')
-    run_cmd('python -m __scripts__.project_context_generator')
+    # run_cmd('python -m __scripts__.project_context_generator')
 
     print('Sequence complete!')
-    input('Press any key to continue...')
+    # input('Press any enter to continue...')
+
+
+if __name__ == '__main__':
+    run_precommit()
