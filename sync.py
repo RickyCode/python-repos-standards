@@ -1,0 +1,24 @@
+import os
+import shutil
+
+source_path = '.standards/'
+# destination_file = '.pre-commit-config.yaml'
+
+files = [
+    '.pre-commit-config.yaml',
+    'PULL_REQUEST_TEMPLATE.md',
+    # 'CONTRIBUTING.md',
+    # 'CODE_OF_CONDUCT.md',
+    # 'LICENSE',
+]
+
+for file_name in files:
+
+    source_file = source_path + file_name
+    destination_file = file_name
+
+    if not os.path.exists(source_file):
+        raise FileNotFoundError(f'The source file {source_file} does not exist.')
+
+    shutil.copy2(source_file, destination_file)
+    print(f'Copied {source_file} to {destination_file}')

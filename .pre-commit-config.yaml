@@ -1,0 +1,122 @@
+# See https://pre-commit.com for more information
+# See https://pre-commit.com/hooks.html for more hooks
+
+default_language_version:
+    python: python3
+repos:
+-   repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.2.0
+    hooks:
+    -   id: check-ast
+        name: python check ast
+    -   id: trailing-whitespace
+        name: trim trailing whitespace
+        files: (.*\.py$|.*\.css$|.*\.js$|.*\.html$)
+    -   id: end-of-file-fixer
+        name: end of line fixer
+        files: (.*\.py$|.*\.css$|.*\.js$|.*\.html$)
+    -   id: check-merge-conflict
+        name: check merge conflicts
+    -   id: double-quote-string-fixer
+        name: double quote string fixer
+    -   id: detect-private-key
+        name: detect private key
+        
+-   repo: https://github.com/python/black
+    rev: 22.3.0
+    hooks:
+    -   id: black
+        files: (.*\.py$)
+        exclude: ^(.*\/migrations\/.*\.py|.*\.cfg$)$
+        language: python
+        args:
+            - "--skip-string-normalization"
+    # -   id: black-jupyter
+    #     files: (.*\.ipynb$)
+    #     language: python
+    #     args:
+    #         - "--skip-string-normalization"
+
+
+-   repo: https://github.com/pycqa/isort
+    rev: 5.13.2
+    hooks:
+    -   id: isort
+        name: isort
+        args:
+            - "--line-length=88"
+            - "--use-parentheses"
+            - "--trailing-comma"
+            - "--multi-line=3"
+            - "--ignore-whitespace"
+
+#-   repo: https://gitlab.com/pycqa/flake8
+-   repo: https://github.com/pycqa/flake8
+    rev: '7.0.0'
+    hooks:
+    - id: flake8
+      exclude: ^src/settings/environments/
+      exclude: original_pandas_mungine_repo
+      args:
+          - "--max-line-length=120"
+          - "--max-complexity=18"
+          - "--select=B,C,E,F,W,T4,B9"
+          - "--ignore=E203,W503,F403,E402"
+        #   - "--ignore=E203,E266,E501,W503,F403,F401,E402,E731"
+
+# -   repo: local
+#     hooks:
+#     - id: pytest-check
+#       name: pytest-check
+#       stages: [commit]
+#       types: [python]
+#       entry: pytest
+#       language: system
+#       pass_filenames: false
+#       always_run: true
+
+# # for jupyter notebooks:
+
+# delete outputs:
+- repo: https://github.com/kynan/nbstripout
+  rev: 0.6.1
+  hooks:
+    - id: nbstripout
+
+# # delete metadata:
+# - repo: https://gitlab.com/iamlikeme/nbhooks
+#   rev: 1.0.0
+#   hooks:
+#   - id: nb-ensure-clean
+#     args: [--meta, ExecuteTime]  # Optional blacklist of metadata keys (you can use regex)
+
+
+-   repo: https://github.com/nbQA-dev/nbQA
+    rev: 1.6.0
+    hooks:
+        -   id: nbqa-check-ast
+        -   id: nbqa-black
+            args:
+                - "--skip-string-normalization"
+        -   id: nbqa-isort
+            args:
+                - "--line-length=88"
+                # - "--use-parentheses"
+                - "--trailing-comma"
+                - "--multi-line=3"
+                - "--ignore-whitespace"
+        -   id: nbqa-flake8
+            args:
+                - "--max-line-length=120"
+                - "--max-complexity=18"
+                - "--select=B,C,E,F,W,T4,B9"
+                - "--ignore=E203,W503,F403,E402,F821" # F821 to avoid "undefined name 'display'"
+                #   - "--ignore=E203,E266,E501,W503,F403,F401,E402,E731"
+
+
+# # for .yml files:
+
+# - repo: https://github.com/jumanjihouse/pre-commit-hook-yamlfmt
+#   rev: 0.2.1
+#   hooks:
+#       - id: yamlfmt
