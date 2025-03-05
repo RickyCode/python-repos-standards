@@ -19,7 +19,7 @@ def update_gitignore():
             gitignore_file.write(f'\n{file_to_ignore}\n')
 
     run_cmd(f'git add {gitignore_path}')
-    run_cmd(f'git commit -m "CHORE: Add {file_to_ignore} to .gitignore"')
+    # run_cmd(f'git commit -m "CHORE: Add {file_to_ignore} to .gitignore"')
 
 
 if __name__ == '__main__':
