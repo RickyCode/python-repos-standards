@@ -122,6 +122,7 @@ A typical git commit message will look like:
 - *`perf`*: A code that improves performance
 - *`style`*: A code that is related to styling
 - *`test`*: Adding new test or making changes to existing test
+- *`lab`*: Analysis and experiments that are not ready to be merged
 
 "**scope**" represents the section of the codebase. Must be the directory or the file name that better indicates the scope of the changes
 
