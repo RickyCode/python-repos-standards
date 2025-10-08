@@ -30,6 +30,11 @@ def sync_files():
         shutil.copy2(source_file, destination_file)
         print(f'Copied {source_file} to {destination_file}')
 
+        run_cmd(f'git add {destination_file}')
+        print(f'Added {destination_file} to git')
+
+    # run_cmd(f'git commit -m "CHORE: Update files from standards"')
+
 
 if __name__ == '__main__':
     sync_files()
