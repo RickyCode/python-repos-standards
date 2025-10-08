@@ -31,6 +31,7 @@ repos:
         language: python
         args:
             - "--skip-string-normalization"
+            - "--line-length=120"
     # -   id: black-jupyter
     #     files: (.*\.ipynb$)
     #     language: python
@@ -41,7 +42,10 @@ repos:
     rev: v2.0.2
     hooks:
     -   id: autopep8
-        args: [--in-place] #, --aggressive, --aggressive]
+        name: autopep8 blank lines
+        args:
+            - --in-place
+            - --select=E301,E302,E303
 
 
 -   repo: https://github.com/pycqa/isort
