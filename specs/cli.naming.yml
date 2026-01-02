@@ -1,0 +1,100 @@
+# specs/cli.naming.yaml
+version: 1
+scope: cli
+format:
+  case: kebab-case
+  separator: "-"
+  allowed_pattern: "^[a-z][a-z0-9]*(?:-[a-z0-9]+)*$"
+
+structure:
+  require_domain_for_commands: true
+  canonical_first_in_docs: true
+
+domains:
+  rules:
+    singular_required: true
+    max_aliases: 1
+    alias_must_be_shorter: true
+    alias_style:
+      allow_prefix: true
+      allow_common_abbreviation: true
+  verb_blacklist:
+    - run
+    - create
+    - generate
+    - process
+    - build
+    - make
+  allowlist: []
+  denylist: []
+
+commands:
+  rules:
+    max_aliases: 1
+    alias_must_be_shorter: true
+    forbid_domain_name_in_command: true
+    require_verb_prefix: true
+    forbid_repeating_domain_context: true
+  verbs_allowlist:
+    - add
+    - apply
+    - build
+    - check
+    - clean
+    - create
+    - delete
+    - diff
+    - export
+    - generate
+    - import
+    - init
+    - inspect
+    - list
+    - load
+    - migrate
+    - open
+    - print
+    - publish
+    - remove
+    - render
+    - run
+    - sync
+    - test
+    - validate
+  verbs_denylist: []
+
+options:
+  rules:
+    long_only_by_default: true
+    allow_short_flag_only_when_marked: true
+    must_start_with_double_dash: true
+    forbid_verb_like_names: true
+  verb_blacklist:
+    - run
+    - create
+    - generate
+    - process
+    - build
+    - make
+  allow_short_if_opt_in_key: "x-allow-short"
+  examples:
+    allowed:
+      - --schema
+      - --root
+      - --dry-run
+    forbidden:
+      - --sch
+      - -r
+
+documentation:
+  canonical_preference:
+    domains: true
+    commands: true
+  aliases_documentation_policy:
+    document_as_secondary_note: true
+    forbid_alias_as_primary_example: true
+
+extensions:
+  click:
+    alias_registration_style: add_command
+    domain_alias_registration_style: root_group_add_command
