@@ -61,15 +61,15 @@ repos:
             - "--ignore-whitespace"
 
 # -   repo: https://github.com/RickyCode/python-repos-standards
--   repo: local
-    hooks:
-    -   id: keyword-spacing
-        name: Python keyword spacing
-        entry: python ./hooks/keyword_spacing.py
-        language: system
-        types: [python]
-        pass_filenames: true
-        always_run: false
+# -   repo: local
+#     hooks:
+#     -   id: keyword-spacing
+#         name: Python keyword spacing
+#         entry: python ./hooks/keyword_spacing.py
+#         language: system
+#         types: [python]
+#         pass_filenames: true
+#         always_run: false
 
 #-   repo: https://gitlab.com/pycqa/flake8
 -   repo: https://github.com/pycqa/flake8

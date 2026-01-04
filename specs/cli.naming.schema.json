@@ -1,0 +1,180 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "cli.naming.schema.json",
+  "title": "CLI Naming Rules Specification",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["version", "scope", "format", "structure", "domains", "commands", "options"],
+  "properties": {
+    "version": { "type": "integer", "minimum": 1 },
+    "scope": { "type": "string", "const": "cli" },
+    "format": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["case", "separator", "allowed_pattern"],
+      "properties": {
+        "case": { "type": "string", "enum": ["kebab-case"] },
+        "separator": { "type": "string", "minLength": 1 },
+        "allowed_pattern": { "type": "string", "minLength": 1 }
+      }
+    },
+    "structure": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["require_domain_for_commands", "canonical_first_in_docs"],
+      "properties": {
+        "require_domain_for_commands": { "type": "boolean" },
+        "canonical_first_in_docs": { "type": "boolean" }
+      }
+    },
+    "domains": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["rules", "verb_blacklist", "allowlist", "denylist"],
+      "properties": {
+        "rules": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["singular_required", "max_aliases", "alias_must_be_shorter", "alias_style"],
+          "properties": {
+            "singular_required": { "type": "boolean" },
+            "max_aliases": { "type": "integer", "minimum": 0 },
+            "alias_must_be_shorter": { "type": "boolean" },
+            "alias_style": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["allow_prefix", "allow_common_abbreviation"],
+              "properties": {
+                "allow_prefix": { "type": "boolean" },
+                "allow_common_abbreviation": { "type": "boolean" }
+              }
+            }
+          }
+        },
+        "verb_blacklist": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "allowlist": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "denylist": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 }
+        }
+      }
+    },
+    "commands": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["rules", "verbs_allowlist", "verbs_denylist"],
+      "properties": {
+        "rules": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "max_aliases",
+            "alias_must_be_shorter",
+            "forbid_domain_name_in_command",
+            "require_verb_prefix",
+            "forbid_repeating_domain_context"
+          ],
+          "properties": {
+            "max_aliases": { "type": "integer", "minimum": 0 },
+            "alias_must_be_shorter": { "type": "boolean" },
+            "forbid_domain_name_in_command": { "type": "boolean" },
+            "require_verb_prefix": { "type": "boolean" },
+            "forbid_repeating_domain_context": { "type": "boolean" }
+          }
+        },
+        "verbs_allowlist": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "verbs_denylist": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 }
+        }
+      }
+    },
+    "options": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["rules", "verb_blacklist", "allow_short_if_opt_in_key", "examples"],
+      "properties": {
+        "rules": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "long_only_by_default",
+            "allow_short_flag_only_when_marked",
+            "must_start_with_double_dash",
+            "forbid_verb_like_names"
+          ],
+          "properties": {
+            "long_only_by_default": { "type": "boolean" },
+            "allow_short_flag_only_when_marked": { "type": "boolean" },
+            "must_start_with_double_dash": { "type": "boolean" },
+            "forbid_verb_like_names": { "type": "boolean" }
+          }
+        },
+        "verb_blacklist": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "allow_short_if_opt_in_key": { "type": "string", "minLength": 1 },
+        "examples": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["allowed", "forbidden"],
+          "properties": {
+            "allowed": { "type": "array", "items": { "type": "string", "minLength": 1 } },
+            "forbidden": { "type": "array", "items": { "type": "string", "minLength": 1 } }
+          }
+        }
+      }
+    },
+    "documentation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["canonical_preference", "aliases_documentation_policy"],
+      "properties": {
+        "canonical_preference": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["domains", "commands"],
+          "properties": {
+            "domains": { "type": "boolean" },
+            "commands": { "type": "boolean" }
+          }
+        },
+        "aliases_documentation_policy": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["document_as_secondary_note", "forbid_alias_as_primary_example"],
+          "properties": {
+            "document_as_secondary_note": { "type": "boolean" },
+            "forbid_alias_as_primary_example": { "type": "boolean" }
+          }
+        }
+      }
+    },
+    "extensions": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "click": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["alias_registration_style", "domain_alias_registration_style"],
+          "properties": {
+            "alias_registration_style": { "type": "string", "minLength": 1 },
+            "domain_alias_registration_style": { "type": "string", "minLength": 1 }
+          }
+        }
+      }
+    }
+  }
+}
